@@ -1,12 +1,9 @@
 import Rebase from 're-base'
 import firebase from 'firebase/app'
 import 'firebase/database'
+import firebaseConf from './conf.js';
 
-const firebaseApp = firebase.initializeApp({
-  apiKey: 'xxx',
-  authDomain: 'xxx',
-  databaseURL: 'xxx'
-})
+const firebaseApp = firebase.initializeApp(firebaseConf);
 
 const base = Rebase.createClass(firebaseApp.database())
 
