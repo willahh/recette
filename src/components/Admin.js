@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import AjouterRecette from "./AjouterRecette";
 
 class Admin extends Component {
-  render () {
+  render() {
     return (
-      <footer>
-        <button onClick={ this.props.chargerExemple }>Remplir</button>
-      </footer>
-    )
+      <div className="cards">
+        <div className="cards">
+          <AjouterRecette ajouterRecette={this.props.ajouterRecette} />
+        </div>
+        <footer>
+          <button onClick={this.props.chargerExemple}>Remplir</button>
+        </footer>
+      </div>
+    );
   }
 }
 
