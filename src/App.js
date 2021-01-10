@@ -23,6 +23,7 @@ const App = ({
       <h1>Bonjour {match.params.pseudo}</h1>
       {cards}
       <Admin
+        pseudo={match.params.pseudo}
         recettes={recettes}
         chargerExemple={chargerExemple}
         ajouterRecette={ajouterRecette}
