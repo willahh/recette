@@ -1,69 +1,29 @@
-import React, { Component } from "react";
-// CSS
+import React from "react";
 import "./App.css";
 import Header from "./components/Header";
-import recettes from "./recettes";
 import Admin from "./components/Admin";
 import Cards from "./components/Card";
+import withFirebase from "./hoc/withFirebase";
 
-// Firebase
-import base from "./base";
+const App = ({ match, recettes, chargerExemple, ajouterRecette, majRecette }) => {
+  const cards = Object.keys(recettes).map((key) => (
+    <Cards key={key} details={recettes[key]} />
+  ));
 
-class App extends Component {
-  state = {
-    pseudo: this.props.match.params.pseudo,
-    recettes: {},
-  };
+  return (
+    <div className="box">
+      <Header pseudo={match.params.pseudo} />
+      <h1>Bonjour {match.params.pseudo}</h1>
+      {cards}
+      <Admin
+        recettes={recettes}
+        chargerExemple={chargerExemple}
+        ajouterRecette={ajouterRecette}
+        majRecette={majRecette}
+      />
+    </div>
+  );
+};
+const WrappedComponent = withFirebase(App);
 
-  componentDidMount() {
-    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
-      context: this,
-      state: "recettes",
-    });
-  }
-
-  componentWillUnmount() {
-    base.removeBinding(this.ref);
-  }
-
-  ajouterRecette = (recette) => {
-    const recettes = { ...this.state.recettes };
-    recettes[`recette-${Date.now()}`] = recette;
-
-    this.setState({ recettes });
-  };
-
-  majRecette = (key, newRecette) => {
-    const recettes = { ...this.state.recettes };
-    recettes[key] = newRecette;
-
-    this.setState({ recettes });
-  };
-
-  chargerExemple = () => {
-    console.log("chargerExemple", recettes);
-    this.setState({ recettes });
-  };
-
-  render() {
-    const cards = Object.keys(this.state.recettes).map((key) => (
-      <Cards key={key} details={this.state.recettes[key]} />
-    ));
-
-    return (
-      <div className="box">
-        <Header pseudo={this.state.pseudo} />
-        <h1>Bonjour {this.state.pseudo}</h1>
-        {cards}
-        <Admin
-          recettes={this.state.recettes}
-          chargerExemple={this.chargerExemple}
-          ajouterRecette={this.ajouterRecette}
-          majRecette={this.majRecette}
-        />
-      </div>
-    );
-  }
-}
-
-export default App;
+export default WrappedComponent;
