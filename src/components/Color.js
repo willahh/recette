@@ -8,11 +8,17 @@ class ColorProvider extends Component {
   }
 
   render() {
-
     return (
-      <ColorContext.Provider></ColorContext.Provider>
+      <ColorContext.Provider
+        value={{
+          state: this.state
+        }}>
+        {this.props.children}
+       </ColorContext.Provider>
     )
   }
 }
+
+export { ColorContext }
 
 export default ColorProvider
