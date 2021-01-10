@@ -10,7 +10,15 @@ class Admin extends Component {
   state = {
     uid: null,
     chef: null,
-  };
+  }
+
+  componentDidMount () {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.handleAuth({ user })
+      }
+    })
+  }
 
   handleAuth = async (authData) => {
     console.log("handleAuth", authData);
